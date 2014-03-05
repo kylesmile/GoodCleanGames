@@ -4,3 +4,9 @@
 require File.expand_path('../config/application', __FILE__)
 
 GoodCleanGames::Application.load_tasks
+
+task :test_environment do
+  ENV['RAILS_ENV'] = 'test'
+end
+
+task :spec => [:test_environment]
