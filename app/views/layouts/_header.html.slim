@@ -1,0 +1,9 @@
+header
+  = link_to "Good Clean Games", '#', id: 'logo'
+  nav
+    ul
+      li = link_to "Home", root_path
+      - if signed_in?
+        li = link_to "Sign out", destroy_user_session_path, method: :delete
+      - else
+        li = link_to "Sign in", new_user_session_path

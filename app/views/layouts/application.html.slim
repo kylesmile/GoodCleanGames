@@ -1,9 +1,16 @@
 doctype html
 html
   head
-    title GoodCleanGames
+    title Good Clean Games | #{yield(:title)}
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
     = javascript_include_tag "application", "data-turbolinks-track" => true
     = csrf_meta_tags
   body
-    = yield
+    = render 'layouts/header'
+    section.content
+      section.flash
+        - if notice
+          p.alert-info = notice
+        - if alert
+          p.alert-danger = alert
+        = yield

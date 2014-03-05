@@ -1,0 +1,33 @@
+@import "bootstrap";
+
+header {
+  @extend .navbar-inverse;
+  @extend .navbar-inner;
+  @extend .container;
+}
+
+nav {
+  ul {
+    @extend .navbar-nav;
+    @extend .pull-right;
+    @extend .nav;
+  }
+}
+
+#logo {
+  float: left;
+  font-size: 1.7em;
+  color: white;
+  padding-top: 9px;
+  font-weight: bold;
+  line-height: 1;
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+.content {
+  @extend .container;
+  @extend .jumbotron;
+}
