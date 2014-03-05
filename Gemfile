@@ -28,11 +28,13 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'jasmine-rails'
+  gem 'spinach-rails'
 end
 
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
+  gem 'database_cleaner'
 end
 
 # Use ActiveModel has_secure_password
