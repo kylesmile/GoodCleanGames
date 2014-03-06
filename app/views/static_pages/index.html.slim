@@ -1,0 +1,8 @@
+- provide(:title, "Home")
+section
+  h1 Good Clean Games
+  - if signed_in?
+    section.games
+      h2 Games
+      ul
+        li = link_to 'Rummy', '#'
