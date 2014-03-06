@@ -20,9 +20,7 @@ class Spinach::Features::StaticPages < Spinach::FeatureSteps
 
   step 'they sign in' do
     click_link 'Sign in'
-    fill_in 'Email', with: @user.email
-    fill_in 'Password', with: @user.password
-    click_button 'Sign in'
+    fill_in_sign_in_form(@user)
     expect(current_path).to eq(root_path)
     expect(page).to have_content('Signed in successfully.')
   end
@@ -37,10 +35,7 @@ class Spinach::Features::StaticPages < Spinach::FeatureSteps
   end
 
   step 'a signed-in user' do
-    visit new_user_session_path
-    fill_in 'Email', with: @user.email
-    fill_in 'Password', with: @user.password
-    click_button 'Sign in'
+    signin(@user)
   end
 
   step 'they click the sign out link' do
