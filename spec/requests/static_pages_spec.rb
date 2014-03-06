@@ -15,7 +15,7 @@ describe "Static Pages" do
 
     it { should_not have_selector('section.games') }
     it { should_not have_selector('h2', text: 'Games') }
-    it { should_not have_link('Rummy') }
+    it { should_not have_link('Rummy', href: games_rummy_path) }
 
     describe "when signed in" do
       let!(:user) { User.create(email: "me@example.com", password: "password") }
@@ -32,7 +32,13 @@ describe "Static Pages" do
 
       it { should have_selector('section.games') }
       it { should have_selector('h2', text: 'Games') }
-      it { should have_link('Rummy') }
+      it { should have_link('Rummy', href: games_rummy_path) }
+
+      describe "selecting a game" do
+        before { click_link('Rummy') }
+
+        it { should have_title('Good Clean Games | Rummy') }
+      end
 
       describe "signing out" do
         before { click_link "Sign out" }
