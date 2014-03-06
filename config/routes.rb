@@ -1,5 +1,7 @@
 GoodCleanGames::Application.routes.draw do
+  mount JasmineRails::Engine => '/specs' if defined?(JasmineRails) && Rails.env.development?
   devise_for :users
+  match '/games/rummy', to: 'static_pages#rummy', via: :get
   root 'static_pages#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

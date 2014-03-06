@@ -1,0 +1,30 @@
+- provide(:title, "Rummy")
+div ng-app="rummyApp"
+  section.game
+
+    section.hand ng-controller="BotHandsController"
+      ul#opponent-hand
+        li ng-repeat="card in hand"
+          img src="/assets/cards/backs_blue.png"
+
+    section#deck-discard ng-controller="DeckDiscardsController"
+      img.deck src="/assets/cards/backs_blue.png" ng-click="draw()"
+      ul.discard
+        li ng-repeat="card in cards"
+          img ng-src="{{imageName(card)}}"
+
+    section#player-melds ng-controller="MeldsController"
+      ul.melds
+        li ng-repeat="meld in melds"
+          ul class="meld"
+            li ng-repeat="card in meld.cards()"
+              img ng-src="{{imageName(card)}}"
+
+    section.hand ng-controller="PlayerHandsController"
+      ul#hand
+        li ng-repeat="card in hand"
+          img ng-src="{{imageName(card)}}" ng-class="{ selected: isSelected($index)}" ng-click="toggleSelection($index)"
+
+    section.turn ng-controller="TurnsController"
+      button ng-click="discard()" ng-disabled="!validDiscard()" Discard
+      button ng-click="$timeout(meld())" ng-disabled="!validMeld()" Meld
