@@ -33,6 +33,7 @@ end
 
 group :test do
   gem 'selenium-webdriver'
+  gem 'poltergeist'
   gem 'capybara'
   gem 'database_cleaner'
 end
