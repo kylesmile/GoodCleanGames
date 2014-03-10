@@ -1,9 +1,5 @@
 class Spinach::Features::DrawingInRummy < Spinach::FeatureSteps
-  step 'a signed-in user on the Rummy page' do
-    @user = User.create(email: 'me@example.com', password: 'password')
-    signin(@user)
-    click_link('Rummy')
-  end
+  include CommonSteps::Signin
 
   step 'they click on the deck' do
     find('.deck').click

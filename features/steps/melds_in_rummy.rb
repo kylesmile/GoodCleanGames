@@ -1,9 +1,5 @@
 class Spinach::Features::MeldsInRummy < Spinach::FeatureSteps
-  step 'a signed-in user on the Rummy page' do
-    @user = User.create(email: 'me@example.com', password: 'password')
-    signin(@user)
-    visit games_rummy_path
-  end
+  include CommonSteps::Signin
 
   step 'with cards that can be melded' do
     click_button "Meld Rig"
