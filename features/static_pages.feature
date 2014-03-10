@@ -4,7 +4,7 @@ Feature: Static Pages
     Given someone visiting the home page
     Then the home page should have the proper title and content
 
-  Scenario: Signin in
+  Scenario: Signing in
     Given a signed-up user
     And someone visiting the home page
     When they sign in
