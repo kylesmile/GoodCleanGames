@@ -3,7 +3,7 @@ class Spinach::Features::StaticPages < Spinach::FeatureSteps
     visit root_path
   end
 
-  step 'the home page should have the proper title and content' do
+  step 'the home page should have the content for a user who is not signed in' do
     expect(page).to have_title("Good Clean Games | Home")
     expect(page).to have_content("Good Clean Games")
     expect(page).to have_link("Sign in", href: new_user_session_path)
@@ -25,7 +25,7 @@ class Spinach::Features::StaticPages < Spinach::FeatureSteps
     expect(page).to have_content('Signed in successfully.')
   end
 
-  step 'the home page should change appropriately' do
+  step 'the home page should have the content for a user who is signed in' do
     expect(page).not_to have_link('Sign in', href: new_user_session_path)
     expect(page).to have_link('Sign out', href: destroy_user_session_path)
 
@@ -35,6 +35,7 @@ class Spinach::Features::StaticPages < Spinach::FeatureSteps
   end
 
   step 'a signed-in user' do
+    @user = User.create(email: 'me@example.com', password: 'password')
     signin(@user)
   end
 
