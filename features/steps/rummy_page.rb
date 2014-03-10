@@ -1,5 +1,5 @@
 class Spinach::Features::RummyPage < Spinach::FeatureSteps
-  step 'a signed-in user on the Rummy page' do
+  step 'a signed-in user on the Rummy page at the start of a game' do
     @user = User.create(email: 'me@example.com', password: 'password')
     signin(@user)
     click_link('Rummy')
