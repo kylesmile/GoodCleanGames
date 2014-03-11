@@ -3,10 +3,28 @@ class Spinach::Features::StaticPages < Spinach::FeatureSteps
     visit root_path
   end
 
+  step 'they click the sign up link' do
+    click_link 'Sign up'
+  end
+
+  step 'fill in the sign-up form' do
+    fill_in 'Email', with: 'new@example.com'
+    fill_in 'Password', with: '12345678'
+    fill_in 'Password confirmation', with: '12345678'
+    click_button 'Sign up'
+  end
+
+  step 'they should be signed in as a new user' do
+    new_user = User.where(email: 'new@example.com')[0]
+    expect(new_user).not_to be_nil
+    expect(new_user.created_at.utc).to be_between(Time.now - 1.second, Time.now)
+  end
+
   step 'the home page should be for non-signed-in users' do
     expect(page).to have_title("Good Clean Games | Home")
     expect(page).to have_content("Good Clean Games")
     expect(page).to have_link("Sign in", href: new_user_session_path)
+    expect(page).to have_link("Sign up", href: new_user_registration_path)
     expect(page).to have_link("Home", href: root_path)
 
     expect(page).not_to have_selector('section.games')
@@ -27,6 +45,7 @@ class Spinach::Features::StaticPages < Spinach::FeatureSteps
 
   step 'the home page should be for signed-in users' do
     expect(page).not_to have_link('Sign in', href: new_user_session_path)
+    expect(page).not_to have_link('Sign up', href: new_user_registration_path)
     expect(page).to have_link('Sign out', href: destroy_user_session_path)
 
     expect(page).to have_selector('section.games')
