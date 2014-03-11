@@ -2,7 +2,8 @@ class Spinach::Features::MeldsInRummy < Spinach::FeatureSteps
   include CommonSteps::Signin
 
   step 'with cards that can be melded' do
-    click_button "Meld Rig"
+    rig_hand_for_meld
+    find('.deck').click
   end
 
   step 'they make a meld' do

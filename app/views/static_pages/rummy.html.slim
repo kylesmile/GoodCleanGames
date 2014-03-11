@@ -28,6 +28,3 @@ div ng-app="rummyApp"
     section.turn ng-controller="TurnsController"
       button ng-click="discard()" ng-disabled="!validDiscard()" Discard
       button ng-click="$timeout(meld())" ng-disabled="!validMeld()" Meld
-  - if Rails.env.test?
-    section.tests ng-controller="TestsController"
-      button ng-click="rigForMeld()" Meld Rig
