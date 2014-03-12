@@ -17,6 +17,7 @@ Feature: Static Pages
     When they sign in
     Then the home page should be for signed-in users
 
+  @javascript
   Scenario: Signing out
     Given a signed-in user
     When they click the sign out link
