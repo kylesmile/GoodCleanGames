@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.1.0'
 
 gem 'rails', '4.0.3'
 gem 'pg'
@@ -36,6 +37,10 @@ group :test do
   gem 'poltergeist'
   gem 'capybara'
   gem 'database_cleaner'
+end
+
+group :production do
+  gem 'rails_12factor'
 end
 
 # Use ActiveModel has_secure_password
