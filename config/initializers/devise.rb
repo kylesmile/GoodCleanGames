@@ -1,10 +1,11 @@
+require 'securerandom'
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
-  # config.secret_key = 'a93ac8900937800cfc914a51d9a04489ded4dd1d162d9b77d3237623b262ad5663a2d5e573efce5d437aaa2f3f5820ecda9fbdadbe575b86250b98a0b5507c67'
+  config.secret_key = ENV['DEVISE_SECRET_KEY']
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,

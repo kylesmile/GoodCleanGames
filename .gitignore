@@ -24,4 +24,5 @@ doc/
 .DS_Store
 .idea
 .secret
+.devise_secret
 .env_overrides.rb
