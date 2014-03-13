@@ -1,33 +1,61 @@
 - provide(:title, "Rummy")
 p Begin your turn by drawing a card. Select card(s) to discard or meld, then click the Discard or Meld button to confirm your selection and play the card(s).
-div ng-app="rummyApp"
-  section.game
+section.game
 
-    section.hand ng-controller="BotHandsController"
-      ul#opponent-hand
-        li ng-repeat="card in hand"
-          img src="/assets/cards/backs_blue.png"
+  section#opponent
+    ul.hand
+      li
+        = image_tag 'cards/backs_blue.png'
+      li
+        = image_tag 'cards/backs_blue.png'
+      li
+        = image_tag 'cards/backs_blue.png'
+      li
+        = image_tag 'cards/backs_blue.png'
+      li
+        = image_tag 'cards/backs_blue.png'
+      li
+        = image_tag 'cards/backs_blue.png'
+      li
+        = image_tag 'cards/backs_blue.png'
 
-    section#deck-discard ng-controller="DeckDiscardsController"
-      img.deck src="/assets/cards/backs_blue.png" ng-click="draw()"
-      ul.discard
-        li ng-repeat="card in cards"
-          img ng-src="{{imageName(card)}}"
+    ul.melds
+      li
+        ul.meld
+          li
+            = image_tag 'cards/da.png'
 
-    section#player-melds ng-controller="MeldsController"
-      ul.melds
-        li ng-repeat="meld in melds"
-          ul class="meld"
-            li ng-repeat="card in meld.cards()"
-              img ng-src="{{imageName(card)}}"
+  section#deck-discard
+    #deck
+      = image_tag 'cards/backs_blue.png'
+    ul#discard
+      li
+        = image_tag 'cards/sa.png'
 
-    section.hand ng-controller="PlayerHandsController"
-      ul#hand
-        li ng-repeat="card in hand"
-          img ng-src="{{imageName(card)}}" ng-class="{ selected: isSelected($index)}" ng-click="toggleSelection($index)"
+  section#player
+    ul.melds
+      li
+        ul.meld
+          li
+            = image_tag 'cards/ca.png'
 
-    section.turn ng-controller="TurnsController"
-      button ng-click="discard()" ng-disabled="!validDiscard()" Discard
-      button ng-click="$timeout(meld())" ng-disabled="!validMeld()" Meld
+    ul.hand
+      li
+        = image_tag 'cards/ha.png'
+      li
+        = image_tag 'cards/ha.png'
+      li
+        = image_tag 'cards/ha.png'
+      li
+        = image_tag 'cards/ha.png'
+      li
+        = image_tag 'cards/ha.png'
+      li
+        = image_tag 'cards/ha.png'
+      li
+        = image_tag 'cards/s2.png', class: 'selected'
 
-  = javascript_include_tag "rummy/rummy", "data-turbolinks-track" => true
+  section#turn
+    button Discard
+    button[disabled] Meld
+
