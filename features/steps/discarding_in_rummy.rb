@@ -7,7 +7,7 @@ class Spinach::Features::DiscardingInRummy < Spinach::FeatureSteps
   end
 
   step 'they draw a card' do
-    find('.deck').click
+    find('#deck').click
   end
 
   step 'they discard one of their cards' do
@@ -22,13 +22,13 @@ class Spinach::Features::DiscardingInRummy < Spinach::FeatureSteps
   end
 
   step 'the discard pile should have two cards' do
-    within('.discard') do
+    within('#discard') do
       expect(page).to have_selector('li img', count: 2)
     end
   end
 
   step 'the robot should take its turn' do
-    within('.discard') do
+    within('#discard') do
       expect(page).to have_selector('li img', count: 3)
     end
   end

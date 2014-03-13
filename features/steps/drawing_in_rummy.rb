@@ -2,7 +2,7 @@ class Spinach::Features::DrawingInRummy < Spinach::FeatureSteps
   include CommonSteps::Signin
 
   step 'they click on the deck' do
-    find('.deck').click
+    find('#deck').click
   end
 
   step 'they should have another card' do

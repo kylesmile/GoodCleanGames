@@ -19,12 +19,12 @@ class Spinach::Features::RummyPage < Spinach::FeatureSteps
   end
 
   step 'there should be one card in the discard pile' do
-    within('.discard') do
+    within('#discard') do
       expect(page).to have_selector('li img', count: 1)
     end
   end
 
   step 'the deck should be displayed properly' do
-    expect(page).to have_selector('img.deck[src="/assets/cards/backs_blue.png"]')
+    expect(page).to have_selector('#deck[src="/assets/cards/backs_blue.png"]')
   end
 end
