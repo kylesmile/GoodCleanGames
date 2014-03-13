@@ -2,6 +2,8 @@ class Spinach::Features::RummyPage < Spinach::FeatureSteps
   include CommonSteps::Signin
 
   step 'they are at the start of a game' do
+    # This step is used to clarify the feature file
+    # Nothing needs to happen here
   end
 
   step 'their opponent should have seven cards' do

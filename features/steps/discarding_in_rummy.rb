@@ -2,6 +2,8 @@ class Spinach::Features::DiscardingInRummy < Spinach::FeatureSteps
   include CommonSteps::Signin
 
   step 'they are at the start of a game' do
+    # This step is used to clarify the feature file
+    # Nothing needs to happen here
   end
 
   step 'they draw a card' do
