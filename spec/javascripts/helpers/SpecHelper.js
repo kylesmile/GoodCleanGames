@@ -1,3 +1,5 @@
+//= require_tree ../../../app/assets/javascripts/rummy
+
 beforeEach(function() {
     jasmine.addMatchers({
       toBeAKindOf: function() {
