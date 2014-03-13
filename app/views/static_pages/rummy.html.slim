@@ -29,3 +29,5 @@ div ng-app="rummyApp"
     section.turn ng-controller="TurnsController"
       button ng-click="discard()" ng-disabled="!validDiscard()" Discard
       button ng-click="$timeout(meld())" ng-disabled="!validMeld()" Meld
+
+  = javascript_include_tag "rummy/rummy", "data-turbolinks-track" => true
