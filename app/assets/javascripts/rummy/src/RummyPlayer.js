@@ -12,7 +12,7 @@ RummyPlayer.prototype.melds = function() {
 }
 
 RummyPlayer.prototype.takeCard = function(card) {
-  this.cards().push(card);
+  this.cards().pushObject(card);
   this.sortCards()
 }
 

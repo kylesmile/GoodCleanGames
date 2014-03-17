@@ -8,19 +8,19 @@ class Spinach::Features::RummyPage < Spinach::FeatureSteps
 
   step 'their opponent should have seven cards' do
     within('#opponent .hand') do
-      expect(page).to have_selector('li img', count: 7)
+      expect(page).to have_selector('li', count: 7)
     end
   end
 
   step 'they should have seven cards' do
     within('#player .hand') do
-      expect(page).to have_selector('li img', count: 7)
+      expect(page).to have_selector('li', count: 7)
     end
   end
 
   step 'there should be one card in the discard pile' do
     within('#discard') do
-      expect(page).to have_selector('li img', count: 1)
+      expect(page).to have_selector('li', count: 1)
     end
   end
 

@@ -2,6 +2,10 @@
 p Begin your turn by drawing a card. Select card(s) to discard or meld, then click the Discard or Meld button to confirm your selection and play the card(s).
 section.game
 
+  script type='text/x-handlebars' data-template-name='rummy'
+    == '{{partial "deckDiscard"}}'
+    == '{{partial "player"}}'
+
   section#opponent
     ul.hand
       li
@@ -25,37 +29,31 @@ section.game
           li
             = image_tag 'cards/da.png'
 
-  section#deck-discard
-    #deck
-      = image_tag 'cards/backs_blue.png'
-    ul#discard
-      li
-        = image_tag 'cards/sa.png'
+  script type="text/x-handlebars" data-template-name="_deckDiscard"
+    section#deck-discard
+      <div id="deck" {{action "draw" on="click"}}>
+        = image_tag 'cards/backs_blue.png'
+      </div>
+      ul#discard
+        li
+          = image_tag 'cards/sa.png'
 
-  section#player
-    ul.melds
-      li
-        ul.meld
-          li
-            = image_tag 'cards/ca.png'
+  script type='text/x-handlebars' data-template-name='_player'
+    section#player
+      ul.melds
+        li
+          ul.meld
+            li
+              = image_tag 'cards/ca.png'
 
-    ul.hand
-      li
-        = image_tag 'cards/ha.png'
-      li
-        = image_tag 'cards/ha.png'
-      li
-        = image_tag 'cards/ha.png'
-      li
-        = image_tag 'cards/ha.png'
-      li
-        = image_tag 'cards/ha.png'
-      li
-        = image_tag 'cards/ha.png'
-      li
-        = image_tag 'cards/s2.png', class: 'selected'
+      ul.hand
+        = '{{#each playerCards}}'
+        li
+          <div class={{imageClass this}}>
+        = '{{/each}}'
 
   section#turn
     button Discard
     button[disabled] Meld
 
+= javascript_include_tag 'rummy/rummy', 'data-turbolinks-track' => true

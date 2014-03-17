@@ -1,3 +1,4 @@
+//= require ember
 //= require_tree ../../../app/assets/javascripts/rummy
 
 beforeEach(function() {

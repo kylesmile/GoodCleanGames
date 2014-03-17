@@ -32,7 +32,7 @@
 }
 
 .melds img {
-  width: 75%;
+  width: 50px;
 }
 
 .meld {
@@ -47,8 +47,6 @@
   text-align: right;
 }
 
-#discard li, .meld li, .hand li {
-  &:first-child {
-    text-indent: 0;
-  }
+#discard li:first-child, .meld li:first-child, .hand li:first-of-type {
+  text-indent: 0;
 }
