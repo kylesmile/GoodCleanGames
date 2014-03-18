@@ -6,3 +6,8 @@ section
       h2 Games
       ul
         li = link_to 'Rummy', games_rummy_path
+  - else
+    p
+      => link_to "Sign up", new_user_registration_path
+      | to play!
+
