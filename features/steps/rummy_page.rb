@@ -1,18 +1,18 @@
 class Spinach::Features::RummyPage < Spinach::FeatureSteps
   include CommonSteps::Signin
 
-  step 'they are at the start of a game' do
+  step 'I am at the start of a game' do
     # This step is used to clarify the feature file
     # Nothing needs to happen here
   end
 
-  step 'their opponent should have seven cards' do
+  step 'my opponent should have seven cards' do
     within('#opponent .hand') do
       expect(page).to have_selector('li', count: 7)
     end
   end
 
-  step 'they should have seven cards' do
+  step 'I should have seven cards' do
     within('#player .hand') do
       expect(page).to have_selector('li', count: 7)
     end
