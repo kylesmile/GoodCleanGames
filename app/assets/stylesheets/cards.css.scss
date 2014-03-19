@@ -1,0 +1,13 @@
+$RANKS: 2 3 4 5 6 7 8 9 10 j q k a;
+$SUITS: c h d s;
+
+@each $suit in $SUITS {
+  @each $rank in $RANKS {
+    .card-#{$suit}#{$rank} {
+      width: 71px;
+      height: 96px;
+      display: inline-block;
+      background-image: image-url("cards/#{$suit}#{$rank}.png")
+    }
+  }
+}

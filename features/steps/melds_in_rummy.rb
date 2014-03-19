@@ -3,7 +3,7 @@ class Spinach::Features::MeldsInRummy < Spinach::FeatureSteps
 
   step 'with cards that can be melded' do
     rig_hand_for_meld
-    find('.deck').click
+    find('#deck').click
   end
 
   step 'they make a meld' do
