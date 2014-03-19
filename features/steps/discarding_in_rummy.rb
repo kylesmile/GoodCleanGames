@@ -1,21 +1,21 @@
 class Spinach::Features::DiscardingInRummy < Spinach::FeatureSteps
   include CommonSteps::Signin
 
-  step 'they are at the start of a game' do
+  step 'I am at the start of a game' do
     # This step is used to clarify the feature file
     # Nothing needs to happen here
   end
 
-  step 'they draw a card' do
+  step 'I draw a card' do
     find('#deck').click
   end
 
-  step 'they discard one of their cards' do
+  step 'I discard one of my cards' do
     first('#player .hand li div').click
     click_button('Discard')
   end
 
-  step 'they should have seven cards' do
+  step 'I should have seven cards' do
     within('#player .hand') do
       expect(page).to have_selector('li', count: 7)
     end
