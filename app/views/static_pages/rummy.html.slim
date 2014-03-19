@@ -22,13 +22,13 @@ section.game
     ul.hand
       | {{#each playerCards}}
       li
-        <div class={{imageClass}} {{action "toggleSelection" on="click" target="view"}} {{bind-attr data-index=_view.contentIndex class='indexIsSelected:selected'}}></div>
+        | {{card}}
       | {{/each}}
     | {{/view}}
 
     | {{#view Rummy.TurnView}}
     section#turn
-      <button {{action "discard" on="click"}}>Discard</button>
+      <button {{action "discard" on="click" target="view"}}>Discard</button>
       button[disabled] Meld
     | {{/view}}
 
