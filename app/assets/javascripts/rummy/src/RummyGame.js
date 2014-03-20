@@ -61,7 +61,7 @@ RummyGame.prototype.canMeldSelected = function() {
   if (!this._hasDrawn || this.selectedIndices.length < 3) return false;
 
   var selectedCards = this.selectedIndices.map(function(index) {
-    return this.currentPlayer().cards()[index];
+    return this.currentPlayer().cards().get('content')[index];
   }, this);
 
   selectedCards.sort(function(card1, card2) {

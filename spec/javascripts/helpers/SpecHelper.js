@@ -1,5 +1,6 @@
+//= require handlebars
 //= require ember
-//= require_tree ../../../app/assets/javascripts/rummy
+//= require_tree ../../../app/assets/javascripts/rummy/src
 
 beforeEach(function() {
     jasmine.addMatchers({
