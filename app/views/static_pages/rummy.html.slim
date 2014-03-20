@@ -7,9 +7,12 @@ section.game
     <div id="deck" {{action "draw" on="click" target="view"}}>
       = image_tag 'cards/backs_blue.png'
     </div>
-    ul#discard
-      li
-        = image_tag 'cards/sa.png'
+    div#discard
+      ul
+        | {{#each discardPileCards}}
+        li
+          | {{card}}
+        | {{/each}}
     | {{/view}}
 
     | {{#view Rummy.PlayerView}}

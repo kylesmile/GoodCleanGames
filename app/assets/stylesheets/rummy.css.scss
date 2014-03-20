@@ -20,19 +20,22 @@
   margin-left: 37%;
 }
 
-#discard, #deck {
+#deck, #discard {
   display: inline-block;
-  img {
-    width: 50px;
-  }
+}
+
+#deck img {
+  width: 50px;
+}
+
+#discard div {
+  width: 50px;
+  height: 68px;
+  background-size: 50px 68px;
 }
 
 #discard li, .meld li {
   text-indent:-40px;
-}
-
-.melds img {
-  width: 50px;
 }
 
 .meld {
@@ -47,6 +50,6 @@
   text-align: right;
 }
 
-#discard li:first-child, .meld li:first-child, .hand li:first-of-type {
+#discard li:first-of-type, .meld li:first-of-type, .hand li:first-of-type {
   text-indent: 0;
 }

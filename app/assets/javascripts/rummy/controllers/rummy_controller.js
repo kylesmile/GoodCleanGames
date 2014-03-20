@@ -1,5 +1,17 @@
 Rummy.RummyController = Ember.Controller.extend({
   playerCards: function() {
     return Rummy.game.player(1).cards();
-  }.property()
+  }.property('Rummy.game.player(1).cards().@each'),
+
+  discardPileCards: function() {
+    return Rummy.game.discardPile().cards();
+  }.property(),
+
+  actions: {
+    botTurn: function() {
+      window.setTimeout(function() {
+        Rummy.bot.takeTurn();
+      }, 500);
+    }
+  }
 });

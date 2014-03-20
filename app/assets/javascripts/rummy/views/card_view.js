@@ -3,12 +3,12 @@ Rummy.CardView = Ember.View.extend({
   classNameBindings: ['imageClass', 'selected'],
 
   imageClass: function() {
-    card = this._context;
+    var card = this._context;
     return ("card-" + card.suit() + card.rank()).toLowerCase();
   }.property(),
 
   index: function() {
-    card = this._context;
+    var card = this._context;
     return Rummy.game.player(1).cards().indexOf(card);
   }.property(),
 
@@ -17,7 +17,7 @@ Rummy.CardView = Ember.View.extend({
   }.property('Rummy.game.selectedIndices.@each'),
 
   click: function() {
-    cardElement = this.$();
+    var cardElement = this.$();
     if (cardElement.hasClass('selected')) {
       Rummy.game.deselectCard(this.get('index'));
       cardElement.addClass('selected');
