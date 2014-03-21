@@ -30,7 +30,7 @@ RummyPlayer.prototype.sortCards = function() {
 }
 
 RummyPlayer.prototype.play = function(cardIndex) {
-  card = this.cards().objectAt(cardIndex);
+  var card = this.cards().objectAt(cardIndex);
   this.cards().removeAt(cardIndex, 1);
   return card;
 }
