@@ -7,6 +7,10 @@ Rummy.RummyController = Ember.Controller.extend({
     return Rummy.game.discardPile().cards();
   }.property(),
 
+  playerMelds: function() {
+    return Rummy.game.player(1).melds();
+  }.property(),
+
   actions: {
     botTurn: function() {
       window.setTimeout(function() {

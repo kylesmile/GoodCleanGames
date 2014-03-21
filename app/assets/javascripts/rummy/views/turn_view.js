@@ -6,6 +6,10 @@ Rummy.TurnView = Ember.View.extend({
     discard: function() {
       Rummy.game.discard();
       this.get('controller').send('botTurn');
+    },
+
+    meld: function() {
+      Rummy.game.meldSelected();
     }
   }
 });

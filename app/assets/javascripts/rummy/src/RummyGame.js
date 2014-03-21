@@ -109,6 +109,6 @@ RummyGame.prototype.discard = function() {
 RummyGame.prototype.meldSelected = function() {
   if (this.canMeldSelected()) {
     this.currentPlayer().meldIndices(this.selectedIndices);
-    this.selectedIndices = [];
+    this.selectedIndices.clear();
   }
 }

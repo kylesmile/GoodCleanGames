@@ -17,10 +17,14 @@ section.game
 
     | {{#view Rummy.PlayerView}}
     ul.melds
+      | {{#each meld in playerMelds}}
       li
         ul.meld
+          | {{#each meld._cards}}
           li
-            = image_tag 'cards/ca.png'
+            | {{card}}
+          | {{/each}}
+      | {{/each}}
 
     ul.hand
       | {{#each playerCards}}
@@ -32,7 +36,7 @@ section.game
     | {{#view Rummy.TurnView}}
     section#turn
       <button {{action "discard" on="click" target="view"}}>Discard</button>
-      button[disabled] Meld
+      <button {{action "meld" on="click" target="view"}}>Meld</button>
     | {{/view}}
 
   section#opponent
@@ -51,11 +55,5 @@ section.game
         = image_tag 'cards/backs_blue.png'
       li
         = image_tag 'cards/backs_blue.png'
-
-    ul.melds
-      li
-        ul.meld
-          li
-            = image_tag 'cards/da.png'
 
 = javascript_include_tag 'rummy/rummy', 'data-turbolinks-track' => true

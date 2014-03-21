@@ -43,17 +43,12 @@ RummyPlayer.prototype.play = function(cardIndex) {
 }
 
 RummyPlayer.prototype.meldIndices = function(indices) {
-  var meldedCards = this.cards().get('content').reduce(function(selectedCards, card, index) {
-    if (indices.indexOf(index) > -1) selectedCards.push(card);
-    return selectedCards;
-  }, []);
+  var meldedCards = this.cards().get('content').objectsAt(indices);
 
-  for (i = this.cards().get('content').length; i >= 0; i--) {
-    if (indices.indexOf(i) > -1) this.cards().get('content').splice(i, 1);
-  }
+  this.cards().get('content').removeObjects(meldedCards);
 
   var meld = new RummyMeld;
   meld.meld(meldedCards);
 
-  this.melds().push(meld);
+  this.melds().pushObject(meld);
 }
