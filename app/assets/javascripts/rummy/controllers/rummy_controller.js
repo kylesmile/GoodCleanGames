@@ -11,6 +11,14 @@ Rummy.RummyController = Ember.Controller.extend({
     return Rummy.game.player(1).melds();
   }.property(),
 
+  discardButtonDisabled: function() {
+    return !Rummy.game.canDiscardSelected();
+  }.property('Rummy.game.selectedIndices.[]'),
+
+  meldButtonDisabled: function() {
+    return !Rummy.game.canMeldSelected();
+  }.property('Rummy.game.selectedIndices.[]'),
+
   actions: {
     botTurn: function() {
       window.setTimeout(function() {
