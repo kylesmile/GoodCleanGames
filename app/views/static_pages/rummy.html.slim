@@ -3,8 +3,37 @@ p Begin your turn by drawing a card. Select card(s) to discard or meld, then cli
 section.game
 
   script type='text/x-handlebars' data-template-name='rummy'
-    == '{{partial "deckDiscard"}}'
-    == '{{partial "player"}}'
+    | {{#view Rummy.DeckDiscardView}}
+    <div id="deck" {{action "draw" on="click" target="view"}}>
+      = image_tag 'cards/backs_blue.png'
+    </div>
+    div#discard
+      ul
+        | {{#each discardPileCards}}
+        li
+          | {{card}}
+        | {{/each}}
+    | {{/view}}
+
+    | {{#view Rummy.PlayerView}}
+    ul.melds
+      li
+        ul.meld
+          li
+            = image_tag 'cards/ca.png'
+
+    ul.hand
+      | {{#each playerCards}}
+      li
+        | {{card}}
+      | {{/each}}
+    | {{/view}}
+
+    | {{#view Rummy.TurnView}}
+    section#turn
+      <button {{action "discard" on="click" target="view"}}>Discard</button>
+      button[disabled] Meld
+    | {{/view}}
 
   section#opponent
     ul.hand
@@ -28,32 +57,5 @@ section.game
         ul.meld
           li
             = image_tag 'cards/da.png'
-
-  script type="text/x-handlebars" data-template-name="_deckDiscard"
-    section#deck-discard
-      <div id="deck" {{action "draw" on="click"}}>
-        = image_tag 'cards/backs_blue.png'
-      </div>
-      ul#discard
-        li
-          = image_tag 'cards/sa.png'
-
-  script type='text/x-handlebars' data-template-name='_player'
-    section#player
-      ul.melds
-        li
-          ul.meld
-            li
-              = image_tag 'cards/ca.png'
-
-      ul.hand
-        = '{{#each playerCards}}'
-        li
-          <div class={{imageClass this}}>
-        = '{{/each}}'
-
-  section#turn
-    button Discard
-    button[disabled] Meld
 
 = javascript_include_tag 'rummy/rummy', 'data-turbolinks-track' => true

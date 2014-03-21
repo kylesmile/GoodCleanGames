@@ -30,7 +30,9 @@ RummyPlayer.prototype.sortCards = function() {
 }
 
 RummyPlayer.prototype.play = function(cardIndex) {
-  return this.cards().splice(cardIndex, 1)[0];
+  var card = this.cards().objectAt(cardIndex);
+  this.cards().removeAt(cardIndex, 1);
+  return card;
 }
 
 RummyPlayer.prototype.meldIndices = function(indices) {
@@ -38,13 +40,13 @@ RummyPlayer.prototype.meldIndices = function(indices) {
     if (indices.indexOf(index) > -1) selectedCards.push(card);
     return selectedCards;
   }, []);
-  
+
   for (i = this.cards().length; i >= 0; i--) {
     if (indices.indexOf(i) > -1) this.cards().splice(i, 1);
   }
-  
+
   var meld = new RummyMeld;
   meld.meld(meldedCards);
-  
-  this.melds().push(meld);  
+
+  this.melds().push(meld);
 }

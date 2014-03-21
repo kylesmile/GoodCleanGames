@@ -3,7 +3,7 @@ function RummyDiscardPile() {
 }
 
 RummyDiscardPile.prototype.discard = function(card) {
-  this._cards.push(card);
+  this._cards.pushObject(card);
 }
 
 RummyDiscardPile.prototype.size = function() {
