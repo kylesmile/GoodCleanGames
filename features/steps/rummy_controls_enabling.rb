@@ -8,14 +8,14 @@ class Spinach::Features::RummyControlsEnabling < Spinach::FeatureSteps
   step 'the discard button should be disabled' do
     within('#turn') do
       button = find('button', text: 'Discard')
-      expect(button[:disabled]).not_to be_nil
+      expect(button).to be_disabled
     end
   end
 
   step 'the meld button should be disabled' do
     within('#turn') do
       button = find('button', text: 'Meld')
-      expect(button[:disabled]).not_to be_nil
+      expect(button).to be_disabled
     end
   end
 
@@ -27,7 +27,7 @@ class Spinach::Features::RummyControlsEnabling < Spinach::FeatureSteps
   step 'the discard button should be enabled' do
     within('#turn') do
       button = find('button', text: 'Discard')
-      expect(button[:disabled]).to be_nil
+      expect(button).not_to be_disabled
     end
   end
 
@@ -39,7 +39,7 @@ class Spinach::Features::RummyControlsEnabling < Spinach::FeatureSteps
   step 'the meld button should be enabled' do
     within('#turn') do
       button = find('button', text: 'Meld')
-      expect(button[:disabled]).to be_nil
+      expect(button).not_to be_disabled
     end
   end
 end
