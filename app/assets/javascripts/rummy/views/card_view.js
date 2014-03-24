@@ -17,13 +17,15 @@ Rummy.CardView = Ember.View.extend({
   }.property('Rummy.game.selectedIndices.@each'),
 
   click: function() {
-    var cardElement = this.$();
-    if (cardElement.hasClass('selected')) {
-      Rummy.game.deselectCard(this.get('index'));
-      cardElement.addClass('selected');
-    } else {
-      Rummy.game.selectCard(this.get('index'));
-      cardElement.removeClass('selected');
+    if (this.get('selectable')) {
+      var cardElement = this.$();
+      if (cardElement.hasClass('selected')) {
+        Rummy.game.deselectCard(this.get('index'));
+        cardElement.addClass('selected');
+      } else {
+        Rummy.game.selectCard(this.get('index'));
+        cardElement.removeClass('selected');
+      }
     }
   }
 });

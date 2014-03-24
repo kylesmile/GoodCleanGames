@@ -11,10 +11,7 @@ class Spinach::FeatureSteps
   end
 
   def rig_hand_for_meld
-    page.execute_script('var scope = angular.element(".hand").last().scope();
-                        scope.$apply(function() {
-                          scope.hand.splice(0, 3);
-                          scope.hand.unshift(new RummyCard("A", "S"), new RummyCard("A", "C"), new RummyCard("A", "D"));
-                        });')
+    page.execute_script('var player = Rummy.game.player(1);
+                         player.takeCards([new RummyCard("A", "S"), new RummyCard("A", "C"), new RummyCard("A", "D")])')
   end
 end
