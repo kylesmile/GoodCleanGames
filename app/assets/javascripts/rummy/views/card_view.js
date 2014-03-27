@@ -10,20 +10,20 @@ Rummy.CardView = Ember.View.extend({
   index: function() {
     var card = this._context;
     return Rummy.game.player(1).cards().indexOf(card);
-  }.property(),
+  },
 
   selected: function() {
-    return Rummy.game.selectedIndices.contains(this.get('index'));
+    return Rummy.game.selectedIndices.contains(this.index());
   }.property('Rummy.game.selectedIndices.@each'),
 
   click: function() {
     if (this.get('selectable')) {
       var cardElement = this.$();
       if (cardElement.hasClass('selected')) {
-        Rummy.game.deselectCard(this.get('index'));
+        Rummy.game.deselectCard(this.index());
         cardElement.addClass('selected');
       } else {
-        Rummy.game.selectCard(this.get('index'));
+        Rummy.game.selectCard(this.index());
         cardElement.removeClass('selected');
       }
     }

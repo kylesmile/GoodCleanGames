@@ -42,4 +42,28 @@ class Spinach::Features::RummyControlsEnabling < Spinach::FeatureSteps
       expect(button).not_to be_disabled
     end
   end
+
+  include CommonSteps::AddToSetsSetup
+
+  step "the Add to set button should be disabled" do
+    within('#turn') do
+      button = find('button', text: 'Add to set')
+      expect(button).to be_disabled
+    end
+  end
+
+  step "I draw" do
+    find('#deck').click
+  end
+
+  step "select the card" do
+    first('#player .hand div').click
+  end
+
+  step "the Add to set button should be enabled" do
+    within('#turn') do
+      button = find('button', text: 'Add to set')
+      expect(button).not_to be_disabled
+    end
+  end
 end

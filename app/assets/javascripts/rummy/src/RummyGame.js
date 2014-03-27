@@ -107,7 +107,7 @@ RummyGame.prototype.canMeldSelected = function() {
 };
 
 RummyGame.prototype.canAddSelectedToSet = function() {
-  if (!this._hasDrawn || this.selectedIndices.length != 1) return false;
+  if (!this._hasDrawn || this.selectedIndices.length != 1 || this.melds().length == 0) return false;
 
   var selectedCards = this.selectedCards();
   if (this.meldsForCurrentPlayer()[0].rank() == selectedCards[0].rank()) return true;

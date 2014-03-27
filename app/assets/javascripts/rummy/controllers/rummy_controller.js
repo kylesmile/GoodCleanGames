@@ -1,7 +1,7 @@
 Rummy.RummyController = Ember.Controller.extend({
   playerCards: function() {
     return Rummy.game.player(1).cards();
-  }.property('Rummy.game.player(1).cards().@each'),
+  }.property('Rummy.game.player(1).cards().[]'),
 
   discardPileCards: function() {
     return Rummy.game.discardPile().cards();
@@ -17,6 +17,10 @@ Rummy.RummyController = Ember.Controller.extend({
 
   meldButtonDisabled: function() {
     return !Rummy.game.canMeldSelected();
+  }.property('Rummy.game.selectedIndices.[]'),
+
+  addToSetButtonDisabled: function() {
+    return !Rummy.game.canAddSelectedToSet();
   }.property('Rummy.game.selectedIndices.[]'),
 
   actions: {
