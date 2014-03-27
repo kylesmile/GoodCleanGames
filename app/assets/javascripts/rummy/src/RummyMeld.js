@@ -19,7 +19,7 @@ RummyMeld.prototype.size = function() {
 };
 
 RummyMeld.prototype.meld = function(cards) {
-  this.cards().push.apply(this.cards(), cards);
+  this.cards().pushObjects(cards);
   this.sortCards();
 };
 
