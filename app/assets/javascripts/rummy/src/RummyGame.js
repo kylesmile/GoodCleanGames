@@ -70,11 +70,9 @@ RummyGame.prototype.draw = function() {
 
 RummyGame.prototype.canDiscardSelected = function() {
   return this.selectedIndices.length == 1 && this._hasDrawn;
-
-RummyGame.prototype.canMeldSelected = function() {
-  if (!this._hasDrawn || this.selectedIndices.length < 3) return false;
 };
 
+RummyGame.prototype.selectedCards = function() {
   var selectedCards = this.selectedIndices.map(function(index) {
     return this.currentPlayer().cards().get('content')[index];
   }, this);
@@ -84,6 +82,14 @@ RummyGame.prototype.canMeldSelected = function() {
     if (card1.order() > card2.order()) return 1;
     return 0;
   });
+
+  return selectedCards;
+};
+
+RummyGame.prototype.canMeldSelected = function() {
+  if (!this._hasDrawn || this.selectedIndices.length < 3) return false;
+
+  var selectedCards = this.selectedCards();
 
   var isSet = selectedCards.every(function(card, index, cards) {
     if (index == 0) return true;
@@ -98,7 +104,19 @@ RummyGame.prototype.canMeldSelected = function() {
   if (isRun) return true;
 
   return false;
-}
+};
+
+RummyGame.prototype.canAddSelectedToSet = function() {
+  if (!this._hasDrawn || this.selectedIndices.length != 1) return false;
+
+  var selectedCards = this.selectedCards();
+  if (this.meldsForCurrentPlayer()[0].rank() == selectedCards[0].rank()) return true;
+  if (this.melds().some(function(meld) {
+    return meld.rank() == selectedCards[0].rank();
+  })) return true;
+
+  return false;
+};
 
 RummyGame.prototype.selectCard = function(cardIndex) {
   if (!this.selectedIndices.some(function(index) { return index == cardIndex })) {
@@ -129,4 +147,22 @@ RummyGame.prototype.meldSelected = function() {
     this.melds().pushObject(meld);
     this.selectedIndices.clear();
   }
-}
+};
+
+RummyGame.prototype.addSelectedToSet = function() {
+  if (this.canAddSelectedToSet()) {
+    var card = this.currentPlayer().playIndices(this.selectedIndices)[0];
+
+    var targetMeld = this.meldsForCurrentPlayer().filter(function(meld) {
+      return meld.rank() == card.rank();
+    })[0];
+
+    if (!targetMeld) {
+      targetMeld = new RummyMeld(this.turn());
+      this.melds().pushObject(targetMeld);
+    }
+    targetMeld.meld([card]);
+    targetMeld.setType(RummyMeld.SET);
+    this.selectedIndices.clear();
+  }
+};

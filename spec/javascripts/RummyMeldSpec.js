@@ -40,4 +40,72 @@ describe("RummyMeld", function() {
 
     expect(meld.playerNumber()).toBe(1);
   });
+
+  describe("runs and sets", function() {
+    var setMeld, runMeld;
+    beforeEach(function() {
+      setMeld = new RummyMeld;
+      setMeld.meld([aceOfDiamonds, aceOfHearts, aceOfClubs]);
+      runMeld = new RummyMeld;
+      runMeld.meld([aceOfSpades, twoOfSpades, threeOfSpades]);
+    });
+
+    it("can be a run or a set", function() {
+      var emptyMeld = new RummyMeld;
+      expect(emptyMeld.isSet()).toBe(false);
+      expect(emptyMeld.isRun()).toBe(false);
+
+      expect(setMeld.isSet()).toBe(true);
+      expect(setMeld.isRun()).toBe(false);
+
+      expect(runMeld.isRun()).toBe(true);
+      expect(runMeld.isSet()).toBe(false);
+    });
+
+    it("allows setting its type if it has only 1 card", function() {
+      var singleCardMeld = new RummyMeld;
+      singleCardMeld.meld([aceOfDiamonds]);
+
+      expect(singleCardMeld.isSet()).toBe(false);
+      expect(singleCardMeld.isRun()).toBe(false);
+
+      singleCardMeld.setType(RummyMeld.SET);
+      expect(singleCardMeld.isSet()).toBe(true);
+      expect(singleCardMeld.isRun()).toBe(false);
+
+      singleCardMeld.setType(RummyMeld.RUN);
+      expect(singleCardMeld.isSet()).toBe(false);
+      expect(singleCardMeld.isRun()).toBe(true);
+
+      setMeld.setType(RummyMeld.RUN);
+      expect(setMeld.isSet()).toBe(true);
+      expect(setMeld.isRun()).toBe(false);
+
+      runMeld.setType(RummyMeld.SET);
+      expect(runMeld.isSet()).toBe(false);
+      expect(runMeld.isRun()).toBe(true);
+    });
+
+    describe("run", function() {
+      it("knows its first and last cards", function() {
+        expect(runMeld.first()).toBe(aceOfSpades);
+        expect(runMeld.last()).toBe(threeOfSpades);
+
+        expect(setMeld.first()).toBeUndefined();
+        expect(setMeld.last()).toBeUndefined();
+      });
+
+      it("knows its suit", function() {
+        expect(runMeld.suit()).toBe('S');
+        expect(setMeld.suit()).toBeUndefined();
+      });
+    });
+
+    describe("set", function() {
+      it("knows its rank", function() {
+        expect(setMeld.rank()).toBe('A');
+        expect(runMeld.rank()).toBeUndefined();
+      });
+    });
+  });
 });
