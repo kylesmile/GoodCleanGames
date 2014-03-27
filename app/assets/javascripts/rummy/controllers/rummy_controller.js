@@ -8,8 +8,8 @@ Rummy.RummyController = Ember.Controller.extend({
   }.property(),
 
   playerMelds: function() {
-    return Rummy.game.player(1).melds();
-  }.property(),
+    return Rummy.game.meldsForPlayer(1);
+  }.property('Rummy.game._melds.[]'),
 
   discardButtonDisabled: function() {
     return !Rummy.game.canDiscardSelected();

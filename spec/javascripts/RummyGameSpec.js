@@ -28,6 +28,17 @@ describe("RummyGame", function() {
     expect(game.discardPile().size()).toBe(1);
   });
 
+  it("keeps track of players' melds", function() {
+    var meld1 = new RummyMeld(1);
+    var meld2 = new RummyMeld(1);
+    var meld3 = new RummyMeld(2);
+    game.melds().pushObjects([meld1, meld2, meld3]);
+
+    expect(game.melds()).toEqual([meld1, meld2, meld3]);
+    expect(game.meldsForPlayer(1)).toEqual([meld1, meld2]);
+    expect(game.meldsForPlayer(2)).toEqual([meld3]);
+  });
+
   it("allows drawing cards", function() {
     game.draw();
     expect(game.player(1).cards().get('content').length).toBe(8);
@@ -149,10 +160,10 @@ describe("RummyGame", function() {
       game.deck()._cards.push(fourOfSpades);
       game.draw();
 
-      expect(game.player(1).melds.length).toBe(0);
+      expect(game.meldsForPlayer(1).length).toBe(0);
 
       game.meldSelected();
-      expect(game.player(1).melds.length).toBe(0);
+      expect(game.meldsForPlayer(1).length).toBe(0);
 
       game.selectCard(0);
       game.selectCard(1);
@@ -160,7 +171,7 @@ describe("RummyGame", function() {
 
       game.meldSelected();
 
-      expect(game.player(1).melds().length).toBe(1);
+      expect(game.meldsForPlayer(1).length).toBe(1);
     });
   });
 });

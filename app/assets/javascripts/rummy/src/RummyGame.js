@@ -4,6 +4,7 @@ function RummyGame(playerCount) {
   this._deck = new CardDeck;
   this._deck.shuffle();
   this._players = [];
+  this._melds = [];
   this._discardPile = new RummyDiscardPile;
   this._hasDrawn = false;
   this._turn = 1;
@@ -20,45 +21,59 @@ function RummyGame(playerCount) {
   }
 
   this._discardPile.discard(this._deck.draw());
-}
+};
 
 RummyGame.prototype.playerCount = function() {
   return this._playerCount;
-}
+};
 
 RummyGame.prototype.deck = function() {
   return this._deck;
-}
+};
 
 RummyGame.prototype.discardPile = function() {
   return this._discardPile;
-}
+};
 
 RummyGame.prototype.player = function(number) {
   return this._players[number - 1];
-}
+};
+
+RummyGame.prototype.melds = function() {
+  return this._melds;
+};
+
+RummyGame.prototype.meldsForPlayer = function(playerNumber) {
+  return this.melds().filter(function(meld) {
+    return meld.playerNumber() == playerNumber;
+  });
+};
+
+RummyGame.prototype.meldsForCurrentPlayer = function() {
+  return this.meldsForPlayer(this.turn());
+};
 
 RummyGame.prototype.turn = function() {
   return this._turn;
-}
+};
 
 RummyGame.prototype.currentPlayer = function() {
   return this.player(this.turn());
-}
+};
 
 RummyGame.prototype.draw = function() {
   if (!this._hasDrawn) {
     this.player(this.turn()).takeCard(this.deck().draw());
     this._hasDrawn = true;
   }
-}
+};
 
 RummyGame.prototype.canDiscardSelected = function() {
   return this.selectedIndices.length == 1 && this._hasDrawn;
-}
 
 RummyGame.prototype.canMeldSelected = function() {
   if (!this._hasDrawn || this.selectedIndices.length < 3) return false;
+};
 
   var selectedCards = this.selectedIndices.map(function(index) {
     return this.currentPlayer().cards().get('content')[index];
@@ -89,26 +104,29 @@ RummyGame.prototype.selectCard = function(cardIndex) {
   if (!this.selectedIndices.some(function(index) { return index == cardIndex })) {
     this.selectedIndices.pushObject(cardIndex);
   }
-}
+};
 
 RummyGame.prototype.deselectCard = function(cardIndex) {
   this.selectedIndices.removeObject(cardIndex);
-}
+};
 
 RummyGame.prototype.discard = function() {
   if (this.canDiscardSelected()) {
-    var playedCard = this.currentPlayer().play(this.selectedIndices[0]);
+    var playedCard = this.currentPlayer().playIndices(this.selectedIndices)[0];
     this.discardPile().discard(playedCard);
     this._turn = this.turn() + 1;
     if (this.turn() > this.playerCount()) this._turn = 1;
     this._hasDrawn = false;
     this.selectedIndices.clear();
   }
-}
+};
 
 RummyGame.prototype.meldSelected = function() {
   if (this.canMeldSelected()) {
-    this.currentPlayer().meldIndices(this.selectedIndices);
+    var cards = this.currentPlayer().playIndices(this.selectedIndices);
+    var meld = new RummyMeld(this.turn());
+    meld.meld(cards);
+    this.melds().pushObject(meld);
     this.selectedIndices.clear();
   }
 }

@@ -1,14 +1,14 @@
 describe("RummyPlayer", function() {
   var player;
-  var threeOfHearts;
-  var jackOfDiamonds;
-  var aceOfSpades;
+  var aceOfSpades, threeOfHearts, sevenOfClubs, jackOfDiamonds, kingOfClubs;
 
   beforeEach(function() {
     player = new RummyPlayer;
     threeOfHearts = new RummyCard("3", "H");
     jackOfDiamonds = new RummyCard("J", "D");
     aceOfSpades = new RummyCard("A", "S");
+    sevenOfClubs = new RummyCard("7", "H");
+    kingOfClubs = new RummyCard("K", "C");
   });
 
   it("can take cards", function() {
@@ -23,19 +23,21 @@ describe("RummyPlayer", function() {
   });
 
   it("can play cards", function() {
-    player.takeCards([aceOfSpades, jackOfDiamonds, threeOfHearts]);
+    player.takeCards([aceOfSpades, jackOfDiamonds, threeOfHearts, sevenOfClubs, kingOfClubs]);
 
-    var card = player.play(1);
-    expect(card).toEqual(threeOfHearts);
-    expect(player.cards().get('content').length).toBe(2);
-    card = player.play(1);
-    expect(card).toEqual(jackOfDiamonds);
-    expect(player.cards().get('content').length).toBe(1);
+    var card = player.playIndices([1]);
+    expect(card).toEqual([threeOfHearts]);
+    expect(player.cards().get('length')).toBe(4);
+    card = player.playIndices([1]);
+    expect(card).toEqual([sevenOfClubs]);
+    expect(player.cards().get('length')).toBe(3);
+
+    var cards = player.playIndices([0, 1, 2]);
+    expect(cards).toEqual([aceOfSpades, jackOfDiamonds, kingOfClubs]);
+    expect(player.cards().get('length')).toBe(0);
   });
 
   it("sorts its cards", function() {
-    var sevenOfClubs = new RummyCard("7", "H");
-    var kingOfClubs = new RummyCard("K", "C");
     player.takeCards([kingOfClubs, jackOfDiamonds, threeOfHearts, sevenOfClubs]);
     player.takeCard(aceOfSpades);
     var cards = player.cards().get('content');
@@ -44,38 +46,5 @@ describe("RummyPlayer", function() {
     expect(cards[2]).toBe(sevenOfClubs);
     expect(cards[3]).toBe(jackOfDiamonds);
     expect(cards[4]).toBe(kingOfClubs);
-  });
-
-  describe("with meldable cards", function() {
-    var aceOfHearts, twoOfHearts, jackOfSpades, jackOfClubs;
-
-    beforeEach(function() {
-      aceOfHearts = new RummyCard("A", "H");
-      twoOfHearts = new RummyCard("2", "H");
-      jackOfSpades = new RummyCard("J", "S");
-      jackOfClubs = new RummyCard("J", "C");
-      player.takeCards([aceOfHearts, twoOfHearts, threeOfHearts, jackOfSpades, jackOfDiamonds, jackOfClubs]);
-    });
-
-    it("keeps track of its melds", function() {
-      expect(player.melds().length).toBe(0);
-
-      player.meldIndices([0,1,2]);
-
-      expect(player.melds().length).toBe(1);
-      expect(player.melds()[0].cards()[0]).toBe(aceOfHearts);
-      expect(player.melds()[0].cards()[1]).toBe(twoOfHearts);
-      expect(player.melds()[0].cards()[2]).toBe(threeOfHearts);
-
-      expect(player.cards().get('content').length).toBe(3);
-
-      player.meldIndices([0,1,2]);
-      expect(player.melds()[1].cards()[0]).toBe(jackOfSpades);
-      expect(player.melds()[1].cards()[1]).toBe(jackOfDiamonds);
-      expect(player.melds()[1].cards()[2]).toBe(jackOfClubs);
-
-      expect(player.melds().length).toBe(2);
-      expect(player.cards().get('content').length).toBe(0);
-    });
   });
 });
