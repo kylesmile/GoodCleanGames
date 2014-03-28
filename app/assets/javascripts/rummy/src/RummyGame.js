@@ -110,7 +110,6 @@ RummyGame.prototype.canAddSelectedToSet = function() {
   if (!this._hasDrawn || this.selectedIndices.length != 1 || this.melds().length == 0) return false;
 
   var selectedCards = this.selectedCards();
-  if (this.meldsForCurrentPlayer()[0].rank() == selectedCards[0].rank()) return true;
   if (this.melds().some(function(meld) {
     return meld.rank() == selectedCards[0].rank();
   })) return true;
