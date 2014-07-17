@@ -36,6 +36,7 @@ section.game
     | {{#view Rummy.TurnView}}
     <button {{action "discard" on="click" target="view"}} {{bind-attr disabled=discardButtonDisabled}}>Discard</button>
     <button {{action "meld" on="click" target="view"}} {{bind-attr disabled=meldButtonDisabled}}>Meld</button>
+    <button {{action "addToSet" on="click" target="view"}} {{bind-attr disabled=addToSetButtonDisabled}}>Add to set</button>
     | {{/view}}
 
   section#opponent

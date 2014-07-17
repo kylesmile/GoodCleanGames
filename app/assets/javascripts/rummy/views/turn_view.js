@@ -10,6 +10,10 @@ Rummy.TurnView = Ember.View.extend({
 
     meld: function() {
       Rummy.game.meldSelected();
+    },
+
+    addToSet: function() {
+      Rummy.game.addSelectedToSet();
     }
   }
 });

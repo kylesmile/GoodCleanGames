@@ -11,7 +11,6 @@ class Spinach::FeatureSteps
   end
 
   def rig_hand_for_meld
-    page.execute_script('var player = Rummy.game.player(1);
-                         player.takeCards([new RummyCard("A", "S"), new RummyCard("A", "C"), new RummyCard("A", "D")])')
+    page.execute_script('Rummy.game.player(1).takeCards([new RummyCard("A", "S"), new RummyCard("A", "C"), new RummyCard("A", "D")])')
   end
 end

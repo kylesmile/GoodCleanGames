@@ -28,6 +28,17 @@ describe("RummyGame", function() {
     expect(game.discardPile().size()).toBe(1);
   });
 
+  it("keeps track of players' melds", function() {
+    var meld1 = new RummyMeld(1);
+    var meld2 = new RummyMeld(1);
+    var meld3 = new RummyMeld(2);
+    game.melds().pushObjects([meld1, meld2, meld3]);
+
+    expect(game.melds()).toEqual([meld1, meld2, meld3]);
+    expect(game.meldsForPlayer(1)).toEqual([meld1, meld2]);
+    expect(game.meldsForPlayer(2)).toEqual([meld3]);
+  });
+
   it("allows drawing cards", function() {
     game.draw();
     expect(game.player(1).cards().get('content').length).toBe(8);
@@ -149,10 +160,10 @@ describe("RummyGame", function() {
       game.deck()._cards.push(fourOfSpades);
       game.draw();
 
-      expect(game.player(1).melds.length).toBe(0);
+      expect(game.meldsForPlayer(1).length).toBe(0);
 
       game.meldSelected();
-      expect(game.player(1).melds.length).toBe(0);
+      expect(game.meldsForPlayer(1).length).toBe(0);
 
       game.selectCard(0);
       game.selectCard(1);
@@ -160,7 +171,109 @@ describe("RummyGame", function() {
 
       game.meldSelected();
 
-      expect(game.player(1).melds().length).toBe(1);
+      expect(game.meldsForPlayer(1).length).toBe(1);
+    });
+
+    describe("adding to melds", function() {
+      var aceOfClubs;
+      var threeOfDiamonds, fourOfDiamonds, fiveOfDiamonds;
+      var eightOfSpades, eightOfClubs, eightOfDiamonds, eightOfHearts;
+      var sevenOfSpades, sevenOfHearts, sevenOfClubs, sevenOfDiamonds;
+      var tenOfClubs, jackOfClubs, queenOfClubs, kingOfClubs;
+
+      beforeEach(function() {
+        aceOfClubs = new RummyCard('A', 'C');
+        threeOfDiamonds = new RummyCard('3', 'D');
+        fourOfDiamonds = new RummyCard('4', 'D');
+        fiveOfDiamonds = new RummyCard('5', 'D');
+        eightOfSpades = new RummyCard('8', 'S')
+        eightOfClubs = new RummyCard('8', 'C')
+        eightOfDiamonds = new RummyCard('8', 'D')
+        eightOfHearts = new RummyCard('8', 'H')
+        sevenOfSpades = new RummyCard('7', 'S');
+        sevenOfHearts = new RummyCard('7', 'H');
+        sevenOfClubs = new RummyCard('7', 'C');
+        sevenOfDiamonds = new RummyCard('7', 'D');
+        tenOfClubs = new RummyCard('10', 'C');
+        jackOfClubs = new RummyCard('J', 'C');
+        queenOfClubs = new RummyCard('Q', 'C');
+        kingOfClubs = new RummyCard('K', 'C');
+
+        game.player(1).cards().set('content', [aceOfClubs, twoOfDiamonds, twoOfSpades, threeOfSpades, sevenOfDiamonds, eightOfHearts, kingOfClubs]);
+
+        var player1Meld1 = new RummyMeld(1);
+        var player1Meld2 = new RummyMeld(1);
+        var player2Meld = new RummyMeld(2);
+        var player3Meld1 = new RummyMeld(3);
+        var player3Meld2 = new RummyMeld(3);
+        player1Meld1.meld([eightOfSpades, eightOfClubs, eightOfDiamonds]);
+        player1Meld2.meld([aceOfSpades, aceOfDiamonds, aceOfHearts]);
+        player2Meld.meld([tenOfClubs, jackOfClubs, queenOfClubs]);
+        player3Meld1.meld([threeOfDiamonds, fourOfDiamonds, fiveOfDiamonds]);
+        player3Meld2.meld([sevenOfSpades, sevenOfHearts, sevenOfClubs]);
+
+        game._melds = [player1Meld1, player1Meld2, player2Meld, player3Meld1, player3Meld2];
+      });
+
+      it("knows if adding to a set is valid", function() {
+        game.selectCard(0);
+        expect(game.canAddSelectedToSet()).toBe(false);
+
+        game._hasDrawn = true;
+        expect(game.canAddSelectedToSet()).toBe(true);
+
+        game.deselectCard(0);
+        expect(game.canAddSelectedToSet()).toBe(false);
+
+        game.selectCard(4);
+        expect(game.canAddSelectedToSet()).toBe(true);
+
+        game.selectCard(5);
+        expect(game.canAddSelectedToSet()).toBe(false);
+
+        game.deselectCard(4);
+        expect(game.canAddSelectedToSet()).toBe(true);
+      });
+
+      describe("after drawing", function() {
+        beforeEach(function() {
+          game._hasDrawn = true;
+        });
+
+        it("allows adding to a set", function() {
+          game.addSelectedToSet();
+          expect(game.meldsForPlayer(1).length).toBe(2);
+          expect(game.meldsForPlayer(2).length).toBe(1);
+          expect(game.meldsForPlayer(3).length).toBe(2);
+
+          game.selectCard(0);
+          game.selectCard(4);
+          game.addSelectedToSet();
+          expect(game.meldsForPlayer(1).length).toBe(2);
+          expect(game.meldsForPlayer(1)[1].cards()).toEqual([aceOfSpades, aceOfDiamonds, aceOfHearts]);
+          expect(game.meldsForPlayer(3)[1].cards()).toEqual([sevenOfSpades, sevenOfHearts, sevenOfClubs]);
+
+          game.deselectCard(0);
+          game.addSelectedToSet();
+          expect(game.meldsForPlayer(1).length).toBe(3);
+          expect(game.meldsForPlayer(1)[1].cards()).toEqual([aceOfSpades, aceOfDiamonds, aceOfHearts]);
+          expect(game.meldsForPlayer(1)[2].cards()).toEqual([sevenOfDiamonds]);
+          expect(game.meldsForPlayer(1)[2].isSet()).toBe(true);
+          expect(game.meldsForPlayer(3)[1].cards()).toEqual([sevenOfSpades, sevenOfHearts, sevenOfClubs]);
+          expect(game.player(1).cards().indexOf(sevenOfDiamonds)).toBe(-1);
+
+          game.selectCard(0);
+          game.addSelectedToSet();
+          expect(game.meldsForPlayer(1).length).toBe(3);
+          expect(game.meldsForPlayer(1)[1].cards()).toEqual([aceOfSpades, aceOfDiamonds, aceOfHearts, aceOfClubs]);
+          expect(game.player(1).cards().indexOf(aceOfClubs)).toBe(-1);
+
+          game.selectCard(3);
+          game.addSelectedToSet();
+          expect(game.meldsForPlayer(1).length).toBe(3);
+          expect(game.meldsForPlayer(1)[0].cards()).toEqual([eightOfSpades, eightOfClubs, eightOfDiamonds, eightOfHearts]);
+        });
+      });
     });
   });
 });
